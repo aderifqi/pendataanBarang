@@ -21,3 +21,6 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/pendataan', function () {
+    return view('pendataan');
+});
