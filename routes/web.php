@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\otentikasi\OtentikasiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,14 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+    //return view('welcome');
+//});
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/', [OtentikasiController::class, 'index'])->name('login');
+Route::post('/login', [OtentikasiController::class, 'login'])->name('login');
+Route::get('/logout', [OtentikasiController::class, 'logout'])->name('logout');
+
+//Route::get('/login', function () {
+    //return view('login');
+//});
 
 Route::get('/pendataan', function () {
-    return view('pendataan');
+    if(session('berhasil_login')){
+        return view('pendataan');
+    }else{
+        return redirect('/');
+    }
 });
