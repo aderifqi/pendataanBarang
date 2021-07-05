@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Barang;
+use App\Models\JenisBarang;
 
 class PendataanBarangController extends Controller
 {
@@ -15,8 +16,12 @@ class PendataanBarangController extends Controller
     public function index()
     {
         $datas = Barang::all();
+        $jenisBarang = JenisBarang::all();
 
-        return $datas;
+        return view('pendataan.index', compact(
+            'datas',
+            'jenisBarang'
+        ));
     }
 
     /**
@@ -26,7 +31,12 @@ class PendataanBarangController extends Controller
      */
     public function create()
     {
-        //
+        $model = new Barang;
+        $jenisBarang = JenisBarang::all();
+        return view('pendataan.create', compact(
+            'model',
+            'jenisBarang',
+        ));
     }
 
     /**
@@ -37,7 +47,16 @@ class PendataanBarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = new Barang;
+
+        $model->nama_barang = $request->nama_barang;
+        $model->jumlah_barang = $request->jumlah_barang;
+        $model->satuan_barang = $request->satuan_barang;
+        $model->jenis_barang = $request->jenis_barang;
+
+        $model->save();
+        return redirect('pendataan');
+
     }
 
     /**
@@ -59,7 +78,12 @@ class PendataanBarangController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = Barang::find($id);
+        $jenisBarang = JenisBarang::all();
+        return view('pendataan.edit', compact(
+            'model',
+            'jenisBarang',
+        ));
     }
 
     /**
@@ -71,7 +95,15 @@ class PendataanBarangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $model = Barang::find($id);
+        $model->nama_barang = $request->nama_barang;
+        $model->jumlah_barang = $request->jumlah_barang;
+        $model->satuan_barang = $request->satuan_barang;
+        $model->jenis_barang = $request->jenis_barang;
+
+        $model->save();
+        return redirect('pendataan');
+
     }
 
     /**
@@ -82,6 +114,8 @@ class PendataanBarangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = Barang::find($id);
+        $model->delete();
+        return redirect('pendataan');
     }
 }

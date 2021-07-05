@@ -14,13 +14,13 @@ class CreateBarangTable extends Migration
     public function up()
     {
         Schema::create('barang', function (Blueprint $table) {
-            $table->string('kode_barang')->primary();
+            $table->id();
             $table->string('nama_barang');
             $table->integer('jumlah_barang');
-            $table->integer('satuan_barang');
-            $table->string('jenis_barang');
+            $table->string('satuan_barang');
+            $table->unsignedBigInteger('jenis_barang');
 
-            $table->foreign('jenis_barang')->cascadeOnDelete()->references('kode_jenis')->on('jenis_barang');
+            $table->foreign('jenis_barang')->cascadeOnDelete()->references('id')->on('jenis_barang');
             $table->timestamps();
         });
     }
